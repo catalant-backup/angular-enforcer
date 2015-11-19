@@ -1,0 +1,28 @@
+{
+  "name": "angular-enforcer",
+  "version": "0.0.1",
+  "description": "Command line script to lint style rules in Angular templates and automatically correct them",
+  "main": "dist/angular-enforcer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/HourlyNerd/angular-enforcer.git"
+  },
+  "keywords": [
+    "angular",
+    "html",
+    "linter",
+    "linting",
+    "lint",
+    "beautifier",
+    "formatter"
+  ],
+  "author": "Kaelan Cooter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HourlyNerd/angular-enforcer/issues"
+  },
+  "homepage": "https://github.com/HourlyNerd/angular-enforcer#readme"
+}
