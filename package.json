@@ -12,6 +12,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/HourlyNerd/angular-enforcer.git"
   },
+  "bin": {
+    "enforce": "./dist/angular-enforcer.min.js"
+  },
+  "preferGlobal": "true",
   "keywords": [
     "angular",
     "html",
