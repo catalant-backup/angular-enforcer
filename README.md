@@ -23,4 +23,8 @@ where [file path] is a directory to glob for html files
      - self-closing tags
      - new line between code blocks
      - encoding of characters
+     - better parsing of angular attributes:
+          https://github.com/peerigon/angular-expressions
+     - order attributes
+          - build in angular directive's preferred order
 - unit tests
