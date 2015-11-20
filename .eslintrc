@@ -37,9 +37,7 @@
     "jQuery": true
   },
 
-  "plugins": [
-    "angular"
-  ],
+  "plugins": [],
 
   "rules": {
     ////////// Possible Errors //////////
@@ -201,10 +199,5 @@
     "max-statements": 0,  // specify the maximum number of statement allowed in a function (off by default)
     "no-bitwise": 0,      // disallow use of bitwise operators (off by default)
     "no-plusplus": 0,      // disallow use of unary operators, ++ and -- (off by default)
-
-    /////////// ANGULAR ///////////
-    "angular/log": 0,
-    "angular/json-functions": 0,
-    "angular/window-service": 0
   }
 }
