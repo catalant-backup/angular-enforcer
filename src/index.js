@@ -36,8 +36,8 @@ const selfClosingTags = [
     'wbr'
 ];
 
-function process_glob(glob_string, basePath, func) {
-    glob(glob_string, { cwd: basePath }, (err, files) => {
+function processFiles(globString, basePath, func) {
+    glob(globString, { cwd: basePath }, (err, files) => {
         if (err) {
             console.error('Could not open files');
         } else {
@@ -174,13 +174,13 @@ function parseNode(node, level=0) {
     return text;
 }
 
-process_glob('**/*.html', basePath, (err, data, file, update) => {
+processFiles('**/*.html', basePath, (err, data, file, update) => {
     console.log('\n', file)
     data = data.replace(/\>[\s]+\</gi, '><').replace(/\n\s+/gi, ' ');
 
-    let handler = new DefaultHandler((error, dom) => {
-        if (error)
-            console.error(error);
+    let handler = new DefaultHandler((err, dom) => {
+        if (err)
+            console.error(err);
         else {
             //console.log(JSON.stringify(dom, null, 4));
             let final_text = '';
