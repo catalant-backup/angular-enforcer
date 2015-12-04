@@ -15,9 +15,28 @@ const argv = minimist(process.argv.slice(2), {
         'verbose': 'v',
         'save': 'S',
         'quiet': 'q',
-        'diff': 'd'
+        'diff': 'd',
+        'config': 'c'
     }
-})
+});
+
+
+// CONFIG FILE
+const configPath = argv.config || '.enforcer.json';
+function getUserHome() {
+    return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+}
+
+// first try this directory, then try the home directory
+let config = {};
+try {
+    config = JSON.parse(fs.readFileSync(configPath).toString());
+} catch (e) {
+    let dotFilePath = path.join(getUserHome(), '.enforcer.json');
+    try {
+        config = JSON.parse(fs.readFileSync(dotFilePath).toString());
+    } catch (e) {}
+}
 
 
 function stringToList (list) {
@@ -28,24 +47,30 @@ function stringToList (list) {
 }
 
 const options = {
+    // working options
     tabLength: argv['tab-length'] || 4,
     spaces: argv['spaces'] || true,
     lineLength: argv['line-length'] || 100,
     closingSlash: argv['closing-slash'] || false,
-    shortTags: stringToList(argv['short-tags']) || [],
     exprPadding: argv['expr-padding'] || true,
-    encodeHtml: argv['encode-html'] || true,
     attrNewline: argv['attr-newline'] || true,
-    shortLines: argv['short-lines'] || true,
+    textWrap: argv['text-wrap'] || true,
+    wrapIgnoredTags: stringToList(argv['wrap-ignored-tags']) || [],
+    shortTags: stringToList(argv['short-tags']) || [],
+    emptyTagSameLine: argv['empty-tag-same-line'] || true,
+    removeComments: argv['remove-comments'] || false,
+    shortTextNodes: argv['short-text-nodes'] || true,
+    reorderAttrs: argv['reorder-attrs'] || true,
+
+    // not working options
     attrObjIndent: argv['attr-obj-indent'] || true,
     doubleQuotes: argv['double-quotes'] || true,
-    reorderAttrs: argv['reorder-attrs'] || true,
     blockSpacing: argv['block-spacing'] || true,
-    textWrap: argv['text-wrap'] || true,
-    selfClosingTags: stringToList(argv['self-closing-tags']) || [],
-    wrapIgnoredTags: stringToList(argv['wrap-ignored-tags']) || [],
-    removeComments: argv['remove-comments'] || false
+    ...config
 };
+
+console.log(options);
+
 
 
 function printDiff(oldData, newData) {
@@ -168,6 +193,7 @@ if (argv.stdin) {
             console.log('Finished with '+fileData.length + ' files');
         }, (err) => {
             console.log('Could not open files.')
+            console.error(err);
         })
 
 // handle single file

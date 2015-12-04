@@ -81,20 +81,20 @@ Linting is not available when using this method.
 --closing-slash : if true, convert <br> to <br/>. Default is false.
 --short-tags : comma separated list of additional tags that have no associated end tag
 --expr-padding : add a space before and after angular expressions (and a space after the "::" in one-time binded expressions). Default is true.
---encode-html : encodes special characters. Default is true
 --attr-newline : If an html start tag is over the specified line-length, start each attribute on it's own line, indenting by one. Default is true.
---short-lines : If a HTML DOM node can fit under line-length, keep it on one line instead of putting the end tag on its own line.
---attr-obj-indent: Indent JS objects inside attributes, ex: inside ng-class.
+--empty-tag-same-line : Empty DOM nodes will end their tags on the same line if it's within the max line length.
+--short-text-nodes : DOM nodes with just text that can fit on one line will do so. Default is true. If this is false, the text nodes will be indented.
+--attr-obj-indent: Indent JS objects inside attributes, ex: inside ng-class. True by default.
 --double-quotes : If true, use double quotes for attributes, otherwise use single quotes.
 --reorder-attrs : If true, alphabetize HTML attributes in each tag
 --block-spacing : If true, add an empty line in between each HTML block
 --text-wrap : If true, break long text nodes so that indentation + length of text <= line-length. Defaults to true.
---self-closing-tags : comma separated list of additional self-closing tags
 --wrap-ignored-tags : comma separated list of tags to ignore long text nodes inside
 --remove-comments : if true, enforcer will remove all HTML comments
 
 
 **CLI-only options:**
+--config -c : path to the formatting config file. Default is .enforcer.json
 --save -S : report and correct all problems, overwriting all affected files
 --glob -g : Glob strings to look for files
 --stdin -i : read from STDIN instead of giving a file path.
@@ -102,8 +102,8 @@ Linting is not available when using this method.
 --quite -q : silences all output, even when using --diff or --verbose.
 --diff -d : print a colored diff of the changes
 
-## .ngenforcer JSON file
-All options can be specified in an .ngenforcer file. All options are in camelCase.
+## .enforcer.json JSON file
+All options can be specified in an .enforcer.json file. All options are in camelCase.
 
 ```json
 {
@@ -114,8 +114,8 @@ All options can be specified in an .ngenforcer file. All options are in camelCas
 
 ### Option load order:
 1. command line options
-2. .ngenforcer file in current directory (if it exists)
-3. .ngenforcer file in home directory (if it exists)
+2. .enforcer.json file in current directory (if it exists)
+3. .enforcer.json file in home directory (if it exists)
 
 ## TODO
 - specify file extension to look for
