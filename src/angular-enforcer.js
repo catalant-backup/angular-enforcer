@@ -1,15 +1,9 @@
-#!/usr/bin/env node
-
 import path from 'path';
 import _ from 'lodash';
-import { argv } from 'yargs';
 import { DefaultHandler, Parser, DomUtils } from 'htmlparser2';
 import wrap from 'wordwrap';
-import glob from 'glob';
-import fs from 'fs';
+import minimist from 'minimist';
 import 'string.prototype.repeat';
-
-let basePath = argv._.toString(); // i have no idea
 
 const options = {
     tab_length: 4,
@@ -36,31 +30,10 @@ const selfClosingTags = [
     'wbr'
 ];
 
-function processFiles(globString, basePath, func) {
-    glob(globString, { cwd: basePath }, (err, files) => {
-        if (err) {
-            console.error('Could not open files');
-        } else {
-            files.forEach( (file) => {
-                const filePath = path.resolve(basePath, file);
-                const fileDir = path.dirname(filePath);
-
-                const relativeDir = '/' + path.relative(basePath, fileDir);
-                fs.readFile(filePath, (err, data) => {
-                    function updateFunc (newData) {
-                        fs.writeFile(filePath, newData, (err) => {
-                            if (err) {
-                                throw err;
-                            }
-                            console.log('\tFile updated!');
-                        });
-                    }
-                    return func(err, data.toString(), filePath, updateFunc);
-                });
-            });
-        }
-    });
-};
+// tags to ignore wrapping
+const ignoredWrapTags = [
+    'script', 'style'
+];
 
 // format an attribute value
 function formatValue(value, indent) {
@@ -133,7 +106,6 @@ function formateNodeHeader(node, spaces, level) {
 
 function breakLongLines(line) {
     if (line.length > options.line_max) {
-        console.log('long');
         let words = line.split(' ');
         let spaceLeft = options.line_max;
         words.forEach((word) => {
@@ -160,9 +132,10 @@ function parseNode(node, level=0) {
             text += parseNode(child, level + 1);
         });
     }
-    if (node.type === 'text') {
+    if (node.type === 'text' && node.parent && !_.includes(ignoredWrapTags, node.parent.type)) {
         let wrapLine = wrap(spaces.length, options.line_max);
-        text += spaces + decodeURI(wrapLine(node.data)).trim() + '\n';
+        let wrappedText = wrapLine(node.data);
+        text += spaces + decodeURI(wrappedText).trim() + '\n';
     }
     if (node.name && !isSelfClosing(node)) {
         if (sameLineEnding){
@@ -174,25 +147,28 @@ function parseNode(node, level=0) {
     return text;
 }
 
-processFiles('**/*.html', basePath, (err, data, file, update) => {
-    console.log('\n', file)
-    data = data.replace(/\>[\s]+\</gi, '><').replace(/\n\s+/gi, ' ');
 
-    let handler = new DefaultHandler((err, dom) => {
-        if (err)
-            console.error(err);
-        else {
-            //console.log(JSON.stringify(dom, null, 4));
-            let final_text = '';
-            dom.forEach((node) => {
-                final_text += parseNode(node);
-            });
-            console.log(final_text);
-            update(final_text);
-        }
 
-    }, {ignoreWhitespace: true});
-    let parser = new Parser(handler);
-    parser.parseComplete(data);
+export default function angularEnforcer (fileData, options) {
+    return new Promise((resolve, reject) => {
+        let data = fileData.replace(/\>[\s]+\</gi, '><')
+            .replace(/\n\s+/gi, ' ');
 
-});
+        let handler = new DefaultHandler((err, dom) => {
+            if (err) {
+                reject(err);
+            } else {
+                //console.log(JSON.stringify(dom, null, 4));
+                let final_text = '';
+                dom.forEach((node) => {
+                    final_text += parseNode(node);
+                });
+                //console.log(final_text);
+                resolve(final_text);
+            }
+
+        }, {ignoreWhitespace: true});
+        let parser = new Parser(handler);
+        parser.parseComplete(data);
+    });
+}
