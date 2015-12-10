@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Angular Enforcer by HourlyNerd</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Angular Enforcer</h1>
+        <p>Command line script to lint style rules in Angular templates and automatically correct them</p>
+
+        <p class="view"><a href="https://github.com/HourlyNerd/angular-enforcer">View the Project on GitHub <small>HourlyNerd/angular-enforcer</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/HourlyNerd/angular-enforcer/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/HourlyNerd/angular-enforcer/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/HourlyNerd/angular-enforcer">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="angular-enforcer" class="anchor" href="#angular-enforcer" aria-hidden="true"><span class="octicon octicon-link"></span></a>angular-enforcer</h1>
+
+<p>Command line script to lint style rules in Angular templates and automatically correct them.
+Can be used on any HTML file, not just Angular templates.</p>
+
+<h2>
+<a id="corrects-missing-end-tags" class="anchor" href="#corrects-missing-end-tags" aria-hidden="true"><span class="octicon octicon-link"></span></a>Corrects missing end-tags</h2>
+
+<p>from:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">span</span>&gt;
+            &lt;<span class="pl-ent">img</span>&gt;</pre></div>
+
+<p>to:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span>&gt;
+    &lt;<span class="pl-ent">div</span>&gt;
+        &lt;<span class="pl-ent">span</span>&gt;
+            &lt;<span class="pl-ent">img</span>&gt;
+        &lt;/<span class="pl-ent">span</span>&gt;
+    &lt;/<span class="pl-ent">div</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<h2>
+<a id="corrects-inconsistent-text-case" class="anchor" href="#corrects-inconsistent-text-case" aria-hidden="true"><span class="octicon octicon-link"></span></a>Corrects inconsistent text case</h2>
+
+<p>from:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">B</span>&gt;BOLD TEXT&lt;/<span class="pl-ent">B</span>&gt;</pre></div>
+
+<p>to:</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">b</span>&gt;
+    BOLD TEXT
+&lt;/<span class="pl-ent">b</span>&gt;</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p><code>npm install angular-enforcer -g</code></p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="on-a-specific-file" class="anchor" href="#on-a-specific-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>On a specific file</h3>
+
+<p><code>enforce [file path] [options]</code>
+where [file path] is a path to a file to enforce</p>
+
+<h3>
+<a id="on-stdin" class="anchor" href="#on-stdin" aria-hidden="true"><span class="octicon octicon-link"></span></a>On STDIN</h3>
+
+<p><code>cat [file path] | enforce -i</code>
+Simply pipe some file into the enforce command</p>
+
+<h3>
+<a id="on-a-glob" class="anchor" href="#on-a-glob" aria-hidden="true"><span class="octicon octicon-link"></span></a>On a glob</h3>
+
+<p><code>enforce -g [glob string] [options]</code>
+where [glob string] <a href="https://github.com/isaacs/node-glob">node-glob</a> is a string to search for files using
+Ex: <code>enforce -g src/folder/**/*.tpl</code></p>
+
+<h3>
+<a id="on-every-html-file-in-this-folder-and-all-child-folders" class="anchor" href="#on-every-html-file-in-this-folder-and-all-child-folders" aria-hidden="true"><span class="octicon octicon-link"></span></a>On every html file in this folder and all child folders</h3>
+
+<p><code>enforce -g [options]</code>
+This will run the angular-enforcer program on every html file in this folder and all child folders</p>
+
+<h3>
+<a id="from-node" class="anchor" href="#from-node" aria-hidden="true"><span class="octicon octicon-link"></span></a>From node</h3>
+
+<p>You can also import angular-enforcer and use it as you want.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">ngEnforcer</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>angular-enforcer<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-s"><span class="pl-pds">'</span>fs<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">file</span> <span class="pl-k">=</span> <span class="pl-smi">fs</span>.<span class="pl-en">readFileSync</span>(<span class="pl-s"><span class="pl-pds">'</span>file<span class="pl-pds">'</span></span>);
+<span class="pl-k">const</span> <span class="pl-c1">output</span> <span class="pl-k">=</span> <span class="pl-en">ngEnforcer</span>(file, {
+    lineLength<span class="pl-k">:</span> <span class="pl-c1">150</span>
+});</pre></div>
+
+<p>The ngEnforce function takes a string of HTML and options and returns formatted HTML.
+Linting is not available when using this method.</p>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<p><strong>Formatting options:</strong>
+--tab-length : the number of spaces to consider a tab. Default is 4.
+--spaces : If true (default), converts spaces to tabs, using the specified tab length. Otherwise it does the reverse, converting tabs to spaces.
+--line-length : max line length. Default is 100.
+--closing-slash : if true, convert <br> to <br>. Default is false.
+--short-tags : comma separated list of additional tags that have no associated end tag
+--expr-padding : add a space before and after angular expressions (and a space after the "::" in one-time binded expressions). Default is true.
+--attr-newline : If an html start tag is over the specified line-length, start each attribute on it's own line, indenting by one. Default is true.
+--empty-tag-same-line : Empty DOM nodes will end their tags on the same line if it's within the max line length.
+--short-text-nodes : DOM nodes with just text that can fit on one line will do so. Default is true. If this is false, the text nodes will be indented.
+--attr-obj-indent: Indent JS objects inside attributes, ex: inside ng-class. True by default.
+--double-quotes : If true, use double quotes for attributes, otherwise use single quotes.
+--reorder-attrs : If true, alphabetize HTML attributes in each tag
+--block-spacing : If true, add an empty line in between each HTML block
+--text-wrap : If true, break long text nodes so that indentation + length of text &lt;= line-length. Defaults to true.
+--wrap-ignored-tags : comma separated list of tags to ignore long text nodes inside
+--remove-comments : if true, enforcer will remove all HTML comments</p>
+
+<p><strong>CLI-only options:</strong>
+--config -c : path to the formatting config file. Default is .enforcer.json
+--save -S : report and correct all problems, overwriting all affected files
+--glob -g : Glob strings to look for files
+--stdin -i : read from STDIN instead of giving a file path.
+--verbose -v : more verbose reporting, including locations of problems.
+--quite -q : silences all output, even when using --diff or --verbose.
+--diff -d : print a colored diff of the changes</p>
+
+<h2>
+<a id="enforcerjson-json-file" class="anchor" href="#enforcerjson-json-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>.enforcer.json JSON file</h2>
+
+<p>All options can be specified in an .enforcer.json file. All options are in camelCase.</p>
+
+<div class="highlight highlight-source-json"><pre>{
+     <span class="pl-s"><span class="pl-pds">"</span>tabLength<span class="pl-pds">"</span></span>: <span class="pl-c1">2</span>,
+     <span class="pl-s"><span class="pl-pds">"</span>lineLength<span class="pl-pds">"</span></span>: <span class="pl-c1">120</span>
+}</pre></div>
+
+<h3>
+<a id="option-load-order" class="anchor" href="#option-load-order" aria-hidden="true"><span class="octicon octicon-link"></span></a>Option load order:</h3>
+
+<ol>
+<li>command line options</li>
+<li>.enforcer.json file in current directory (if it exists)</li>
+<li>.enforcer.json file in home directory (if it exists)</li>
+</ol>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/HourlyNerd">HourlyNerd</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
