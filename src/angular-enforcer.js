@@ -61,7 +61,11 @@ export default function angularEnforcer (fileData, options) {
         let text = '';
         text += node.name;
         _.each(node.attribs, (value, key) => {
-            text += ' ' +key + '="' + value + '"';
+            if (value.length === 0) {
+                text += ' ' + key;
+            } else {
+                text += ' ' +key + '="' + value + '"';
+            }
         });
         return text;
     }
@@ -102,9 +106,13 @@ export default function angularEnforcer (fileData, options) {
                             text += spaces + '\t';
                         }
                     }
-                    text += attrName + '="';
                     const indent = _.last(text.split('\n')).length + 1;
-                    text += formatValue(attrValue, indent) +'"';
+                    if (attrValue.length === 0) {
+                        text += attrName;
+                    } else {
+                        text += attrName + '="';
+                        text += formatValue(attrValue, indent) +'"';
+                    }
                     if (index === attrs.length-1) {
                         text += '>\n';
                     } else {

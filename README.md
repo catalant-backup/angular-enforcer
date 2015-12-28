@@ -2,8 +2,6 @@
 Command line script to lint style rules in Angular templates and automatically correct them.
 Can be used on any HTML file, not just Angular templates.
 
-**Features:**
-
 ## Corrects missing end-tags
 from:
 ```html

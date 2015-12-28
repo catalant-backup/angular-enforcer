@@ -69,8 +69,6 @@ const options = {
     ...config
 };
 
-console.log(options);
-
 
 
 function printDiff(oldData, newData) {
@@ -136,7 +134,11 @@ function processFileData (filePath, oldData) {
 function processOneFile(filePath) {
     return new Promise((resolve, reject) => {
         fs.readFile(filePath, (err, data) => {
-            processFileData(filePath, data.toString()).then(resolve, reject);
+            if (err && err.code === 'EISDIR'){
+                console.error('ERROR: The path you entered is a directory, not a file.');
+            } else {
+                processFileData(filePath, data.toString()).then(resolve, reject);
+            }
         });
     });
 }
