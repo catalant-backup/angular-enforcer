@@ -72,33 +72,35 @@ Linting is not available when using this method.
 
 ## Options
 
-**Formatting options:**
---tab-length : the number of spaces to consider a tab. Default is 4.
---spaces : If true (default), converts spaces to tabs, using the specified tab length. Otherwise it does the reverse, converting tabs to spaces.
---line-length : max line length. Default is 100.
---closing-slash : if true, convert <br> to <br/>. Default is false.
---short-tags : comma separated list of additional tags that have no associated end tag
---expr-padding : add a space before and after angular expressions (and a space after the "::" in one-time binded expressions). Default is true.
---attr-newline : If an html start tag is over the specified line-length, start each attribute on it's own line, indenting by one. Default is true.
---empty-tag-same-line : Empty DOM nodes will end their tags on the same line if it's within the max line length.
---short-text-nodes : DOM nodes with just text that can fit on one line will do so. Default is true. If this is false, the text nodes will be indented.
---attr-obj-indent: Indent JS objects inside attributes, ex: inside ng-class. True by default.
---double-quotes : If true, use double quotes for attributes, otherwise use single quotes.
---reorder-attrs : If true, alphabetize HTML attributes in each tag
---block-spacing : If true, add an empty line in between each HTML block
---text-wrap : If true, break long text nodes so that indentation + length of text <= line-length. Defaults to true.
---wrap-ignored-tags : comma separated list of tags to ignore long text nodes inside
---remove-comments : if true, enforcer will remove all HTML comments
+**Formatting options**
+
+- `--tab-length`: the number of spaces to consider a tab. Default is 4.
+- `--spaces`: If true (default), converts spaces to tabs, using the specified tab length. Otherwise it does the reverse, converting tabs to spaces.
+- `--line-length`: max line length. Default is 100.
+- `--closing-slash`: if true, convert <br> to <br/>. Default is false.
+- `--short-tags`: comma separated list of additional tags that have no associated end tag
+- `--expr-padding`: add a space before and after angular expressions (and a space after the "::" in one-time binded expressions). Default is true.
+- `--attr-newline`: If an html start tag is over the specified line-length, start each attribute on it's own line, indenting by one. Default is true.
+- `--empty-tag-same-line`: Empty DOM nodes will end their tags on the same line if it's within the max line length.
+- `--short-text-nodes`: DOM nodes with just text that can fit on one line will do so. Default is true. If this is false, the text nodes will be indented.
+- `--attr-obj-indent: Indent JS objects inside attributes, ex: inside ng-class. True by default.
+- `--double-quotes`: If true, use double quotes for attributes, otherwise use single quotes.
+- `--reorder-attrs`: If true, alphabetize HTML attributes in each tag
+- `--block-spacing`: If true, add an empty line in between each HTML block
+- `--text-wrap`: If true, break long text nodes so that indentation + length of text <= line-length. Defaults to true.
+- `--wrap-ignored-tags`: comma separated list of tags to ignore long text nodes inside
+- `--remove-comments`: if true, enforcer will remove all HTML comments
 
 
-**CLI-only options:**
---config -c : path to the formatting config file. Default is .enforcer.json
---save -S : report and correct all problems, overwriting all affected files
---glob -g : Glob strings to look for files
---stdin -i : read from STDIN instead of giving a file path.
---verbose -v : more verbose reporting, including locations of problems.
---quite -q : silences all output, even when using --diff or --verbose.
---diff -d : print a colored diff of the changes
+**CLI-only options**
+
+- `--config` `-c`: path to the formatting config file. Default is .enforcer.json
+- `--save` `-S`: report and correct all problems, overwriting all affected files
+- `--glob` `-g`: Glob strings to look for files
+- `--stdin` `-i`: read from STDIN instead of giving a file path.
+- `--verbose` `-v`: more verbose reporting, including locations of problems.
+- `--quite` `-q`: silences all output, even when using --diff or --verbose.
+- `--diff` `-d`: print a colored diff of the changes
 
 ## .enforcer.json JSON file
 All options can be specified in an .enforcer.json file. All options are in camelCase.
