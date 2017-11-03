@@ -9,6 +9,7 @@ import 'colors';
 import { diffLines } from 'diff';
 
 const argv = minimist(process.argv.slice(2), {
+    boolean: ['glob', 'stdin', 'verbose', 'save', 'quiet', 'diff'],
     alias: {
         'glob': 'g',
         'stdin': 'i',
